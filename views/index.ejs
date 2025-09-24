@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create User</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+    /* Cinematic space background */
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: radial-gradient(circle at center, #000010, #000000 80%);
+      perspective: 1000px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Star styles */
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 4s infinite alternate;
+      box-shadow: 0 0 2px 1px white;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* Shooting stars */
+    .shooting-star {
+      position: absolute;
+      width: 2px;
+      height: 120px;
+      background: linear-gradient(white, transparent);
+      opacity: 0;
+      transform: rotate(45deg);
+      animation: shoot linear infinite;
+      box-shadow: 0 0 8px 2px white;
+    }
+
+    @keyframes shoot {
+      0% { transform: translateY(0) translateX(0) rotate(45deg); opacity: 1; }
+      100% { transform: translateY(1200px) translateX(1200px) rotate(45deg); opacity: 0; }
+    }
+
+    /* Planets */
+    .planet {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ff6ec7, #8e44ad);
+      box-shadow: 0 0 30px 5px rgba(255,255,255,0.3);
+    }
+
+    /* Astronaut floating */
+    .astronaut {
+      position: absolute;
+      width: 100px;
+      animation: float 8s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px white);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(5deg); }
+    }
+
+    /* Form container styling */
+    .form-container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 400px;
+      padding: 2.5rem;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(15px);
+      border-radius: 2rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen relative">
+
+  <!-- Form -->
+  <div class="form-container">
+    <h2 class="text-3xl font-extrabold text-center text-gray-900 mb-8 tracking-wide">Create User</h2>
+
+    <form action="/register" method="post" class="space-y-6">
+
+      <input type="text" name="name" placeholder="Full Name" 
+             class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-400 focus:outline-none shadow-sm">
+
+      <input type="text" name="username" placeholder="Username" 
+             class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-400 focus:outline-none shadow-sm">
+
+      <input type="email" name="email" placeholder="Email" 
+             class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-400 focus:outline-none shadow-sm">
+
+      <input type="password" name="password" placeholder="Password" 
+             class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-400 focus:outline-none shadow-sm">
+
+      <input type="number" name="age" placeholder="Age" 
+             class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-400 focus:outline-none shadow-sm">
+
+      <button type="submit" 
+              class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 text-white py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition-transform duration-300">
+        Submit
+      </button>
+
+    </form>
+
+    <p class="mt-6 text-center text-gray-700 text-sm">
+      Already have an account? <a href="/login" class="text-indigo-600 font-semibold hover:underline">Login</a>
+    </p>
+  </div>
+
+  <!-- Stars, planets, shooting stars, astronaut -->
+  <script>
+    // Stars
+    const numStars = 300;
+    for (let i = 0; i < numStars; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.style.top = Math.random() * window.innerHeight + 'px';
+      star.style.left = Math.random() * window.innerWidth + 'px';
+      const size = Math.random() * 2 + 1;
+      star.style.width = star.style.height = size + 'px';
+      star.style.animationDuration = (Math.random() * 4 + 2) + 's';
+      document.body.appendChild(star);
+    }
+
+    // Shooting stars
+    const numShooting = 8;
+    for (let i = 0; i < numShooting; i++) {
+      const shoot = document.createElement('div');
+      shoot.classList.add('shooting-star');
+      shoot.style.top = Math.random() * window.innerHeight + 'px';
+      shoot.style.left = Math.random() * window.innerWidth + 'px';
+      shoot.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      shoot.style.animationDelay = Math.random() * 5 + 's';
+      document.body.appendChild(shoot);
+    }
+
+    // Planets
+    const planets = [
+      { size: 120, color: 'radial-gradient(circle at 30% 30%, #ff6ec7, #8e44ad)' },
+      { size: 80, color: 'radial-gradient(circle at 40% 40%, #00f0ff, #005f6b)' },
+      { size: 150, color: 'radial-gradient(circle at 50% 50%, #ffb347, #ffcc33)' },
+    ];
+    planets.forEach(p => {
+      const planet = document.createElement('div');
+      planet.classList.add('planet');
+      planet.style.width = planet.style.height = p.size + 'px';
+      planet.style.background = p.color;
+      planet.style.top = Math.random() * (window.innerHeight - p.size) + 'px';
+      planet.style.left = Math.random() * (window.innerWidth - p.size) + 'px';
+      document.body.appendChild(planet);
+    });
+
+    // Astronaut
+    const astronaut = document.createElement('img');
+    astronaut.src = 'https://i.postimg.cc/3x3Qh7P4/astronaut.png'; // free astronaut image
+    astronaut.classList.add('astronaut');
+    astronaut.style.top = '100px';
+    astronaut.style.left = '200px';
+    document.body.appendChild(astronaut);
+  </script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Sky gradient background */
+    .sky {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, #87ceeb 0%, #ffffff 100%);
+      overflow: hidden;
+      z-index: -3;
+    }
+
+    /* Moving clouds */
+    .cloud {
+      position: absolute;
+      top: 10%;
+      background: url('https://i.ibb.co/4f3S6dq/cloud.png') no-repeat;
+      background-size: contain;
+      width: 400px;
+      height: 200px;
+      animation: moveClouds 60s linear infinite;
+      opacity: 0.8;
+    }
+
+    .cloud:nth-child(2) {
+      top: 30%;
+      width: 500px;
+      animation-duration: 90s;
+      opacity: 0.6;
+    }
+
+    .cloud:nth-child(3) {
+      top: 50%;
+      width: 350px;
+      animation-duration: 75s;
+      opacity: 0.7;
+    }
+
+    @keyframes moveClouds {
+      from { left: -600px; }
+      to { left: 100%; }
+    }
+
+    /* Flying birds */
+    .bird {
+      position: absolute;
+      top: 20%;
+      width: 80px;
+      height: 80px;
+      background: url('https://i.ibb.co/gM5y6Zy/bird.gif') no-repeat;
+      background-size: contain;
+      animation: flyBirds 40s linear infinite;
+      z-index: -1;
+    }
+
+    .bird:nth-child(2) {
+      top: 40%;
+      animation-duration: 60s;
+      width: 100px;
+      height: 100px;
+    }
+
+    @keyframes flyBirds {
+      from { left: -120px; }
+      to { left: 110%; }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen relative">
+
+  <!-- Sky Layer -->
+  <div class="sky">
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+    <div class="bird"></div>
+    <div class="bird"></div>
+  </div>
+
+  <!-- Logout Button -->
+  <a href="/logout"
+     class="fixed top-4 right-4 bg-red-500 hover:bg-red-600 rounded-md px-3 py-2 text-white text-sm shadow-md transition">
+     Logout
+  </a>
+
+  <!-- Content Section -->
+  <div class="min-h-screen p-8 flex flex-col items-start space-y-6">
+
+    <!-- Post Form Card -->
+    <div class="w-full max-w-md bg-white bg-opacity-90 rounded-2xl shadow-lg p-8 backdrop-blur-md">
+      <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-md overflow-hidden">
+          <img class="w-full h-full object-cover" src="/images/uploads/<%= user.profilepic %>" alt="">
+        </div>
+
+        <div>
+          <h2 class="text-2xl font-bold text-gray-800 mb-2">
+            Hello, <%= user.name %> 👋
+          </h2>
+
+          <!-- Upload Profile Button -->
+          <a href="/profile/upload"
+             class="mt-2 inline-block bg-blue-500 hover:bg-yellow-600 text-white font-medium px-3 py-1 rounded-md shadow-md transition">
+             Upload / Change Profile Picture
+          </a>
+        </div>
+      </div>
+
+      <p class="text-gray-500 mb-6 mt-3">You can create a post below.</p>
+
+      <form action="/post" method="post">
+        <textarea placeholder="What's on your mind?"
+                  class="block p-3 outline-none w-full resize-none bg-gray-50 border-2 border-gray-300 focus:border-blue-500 rounded-md transition"
+                  rows="4" name="content"></textarea>
+        <input class="text-white font-medium px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-md mt-3 w-full shadow-md transition cursor-pointer"
+               type="submit" value="Create new post">
+      </form>
+    </div>
+
+    <!-- Posts Section Heading -->
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Your Posts</h3>
+
+    <!-- Posts Section -->
+    <div class="space-y-4 w-full max-w-md">
+      <% user.posts.reverse().forEach(function(post) { %>
+        <div class="bg-white bg-opacity-90 rounded-2xl shadow-lg p-6 backdrop-blur-md">
+          <h4 class="text-lg font-semibold text-gray-800 mb-2">
+            <%= user.username %>
+          </h4>
+          <p class="text-gray-600 text-sm mb-4">
+            <%= post.content %>
+          </p>
+          <small class="mt-1 inline-block">
+            <%= post.like.length %> likes
+          </small>
+          <div class="flex gap-4 mt-2">
+            <a href="/like/<%= post._id %>" class="text-blue-500 font-medium hover:text-blue-600 transition">
+              <%= post.like.indexOf(user._id)===-1 ? "Like" : "Unlike" %>
+            </a>
+            <a href="/edit/<%= post._id %>" class="text-gray-400 font-medium hover:text-gray-600 transition">Edit</a>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+
+  </div>
+
+</body>
+
+</html>
