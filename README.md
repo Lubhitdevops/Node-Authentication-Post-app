@@ -21,8 +21,11 @@ The project is **perfect for practicing full-stack Node.js development** and cre
 
 ## 🏗️ Architecture
 
-![Profile Page](https://i.postimg.cc/W1YZf3rn/profile-sky.png)
-![Register Page](https://i.postimg.cc/Kz2vJsBv/register-page.png)
+<img width="1917" height="990" alt="image" src="https://github.com/user-attachments/assets/5967fe69-802e-492f-b678-510791079f30" />
+<img width="1906" height="986" alt="image" src="https://github.com/user-attachments/assets/370c6787-e40f-4c6f-8798-fc03963ba06d" />
+<img width="1919" height="997" alt="image" src="https://github.com/user-attachments/assets/0e6268ea-d6e1-4299-975a-6a23e824baf7" />
+
+
 
 **Components:**
 
